@@ -1,7 +1,7 @@
 <template>
  <div class = "login-wrp">
    <form class="login" @submit.prevent="login">
-     <h2  v-if="!isCorrectEmail">Вход / регистрация</h2>
+     <h2  v-if="!isCorrectEmail">Вход</h2>
      <h2  v-if="isCorrectEmail">Добро пожаловать!</h2>
      <div v-if="isCorrectEmail" class="avatar">
        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,6 +41,7 @@
      <button class = "inputs button continue-btn" v-if="!isCorrectEmail" @click="verifyEmail">Продолжить</button>
      <button  class = "inputs button continue-btn" v-if="isCorrectEmail" type="submit">Войти</button>
      <span v-if="!isCorrectEmail" class="info small-text">Продолжая, вы соглашаетесь с условиями обслуживания</span>
+     <router-link to="/registration" class="info small-text">Ещё не зарегистрированы?</router-link>
    </form>
  </div>
 </template>
@@ -111,6 +112,7 @@
     line-height: 20px;
     margin-bottom: 0;
     cursor: pointer;
+    text-decoration: none;
   }
   .small-text:hover{
     font-size: 17px;
@@ -191,6 +193,7 @@
     background-color: #fff;
     
     margin-bottom: 20px;
+    cursor: pointer;
   }
   .socials{
     list-style: none;
@@ -209,8 +212,12 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    cursor: pointer;
   }
   .socials-item:first-child{
     margin-left:0 ;
+  }
+  .socials-item:hover{
+    background-color: #A3A3A3;
   }
 </style>

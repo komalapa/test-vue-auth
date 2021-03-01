@@ -10,6 +10,7 @@
       
       <span class="info small-text">Продолжая, вы соглашаетесь с условиями обслуживания</span>
       <button  class = "inputs button continue-btn" type="submit">Зарегистрироваться</button>
+      <router-link to="/login" class="info small-text">Уже зарегистрированы?</router-link>
     </form>
   </div>
 </template>
@@ -73,10 +74,12 @@
     line-height: 20px;
     margin-bottom: 30px;
     cursor: pointer;
+    text-decoration: none;
   }
   .small-text:hover{
     font-size: 17px;
   }
+
   .registration{
     width: 510px;
     display: block;
@@ -124,6 +127,7 @@
     background-color: #fff;
     
     margin-bottom: 20px;
+    cursor: pointer;
   }
 
 </style>
