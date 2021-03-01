@@ -35,7 +35,7 @@
      </ul>
      <span v-if="!isCorrectEmail" class="info">или</span>
      <input  v-if="!isCorrectEmail" class = "inputs" required v-model="email" type="email" placeholder="Введите свой e-mail"/>
-     <span v-if="isCorrectEmail" class="correct-email" >{{email}}</span>
+     <span v-if="isCorrectEmail" class="correct-email" @click="changeEmail">{{email}}</span>
      <input v-if="isCorrectEmail" class = "inputs" required v-model="password" type="password" placeholder="Введите пароль"/>
      <span v-if="isCorrectEmail" class="info small-text forgotten-password">Забыли пароль?</span>
      <button class = "inputs button continue-btn" v-if="!isCorrectEmail" @click="verifyEmail">Продолжить</button>
@@ -70,6 +70,9 @@
           this.isCorrectEmail=true;
         }
       },
+      changeEmail: function(){
+        this.isCorrectEmail=false;
+      }
     
     }
   }
@@ -77,7 +80,9 @@
 
 <style scoped>
   .login-wrp{
-    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
   h2{
     font-family: Rambla, Arial, Helvetica, sans-serif;
@@ -105,10 +110,18 @@
     font-size: 16px;
     line-height: 20px;
     margin-bottom: 0;
+    cursor: pointer;
+  }
+  .small-text:hover{
+    font-size: 17px;
   }
   .forgotten-password{
     margin: 80px auto 60px;
+    cursor: pointer;
   }
+   .forgotten-password:hover{
+     font-size: 17px;
+   }
   .avatar{
     width: 80px;
     height: 80px;
@@ -127,6 +140,10 @@
     color: #979797;
     margin: 20px auto;
     display: block;
+    cursor: pointer;
+  }
+  .correct-email:hover{
+    font-size: 25px;
   }
   .login{
     width: 510px;
@@ -147,6 +164,7 @@
     font-style: normal;
     font-weight: bold;
     letter-spacing: -0.5px;
+    outline: transparent;
   }
   input{
     background: #FFFFFF;
@@ -154,6 +172,16 @@
     line-height: 24px;
     color: #C4C4C4;
     margin-bottom: 30px;
+    outline: transparent;
+  }
+  input::placeholder{
+    font-family: Rambla, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+    font-size: 18px;
+    line-height: 24px;
+    color: #C4C4C4;
   }
   button{
     font-size: 24px;
