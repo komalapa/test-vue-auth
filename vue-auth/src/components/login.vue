@@ -38,8 +38,8 @@
      <span v-if="isCorrectEmail" class="correct-email" @click="changeEmail">{{email}}</span>
      <input v-if="isCorrectEmail" class = "inputs" required v-model="password" type="password" placeholder="Введите пароль"/>
      <span v-if="isCorrectEmail" class="info small-text forgotten-password">Забыли пароль?</span>
-     <button class = "inputs button continue-btn" v-if="!isCorrectEmail" @click="verifyEmail">Продолжить</button>
-     <button  class = "inputs button continue-btn" v-if="isCorrectEmail" type="submit">Войти</button>
+     <button class = "inputs button continue-btn" v-if="!isCorrectEmail" @click="verifyEmail" id="continue-login" type ="button">Продолжить</button>
+     <button  class = "inputs button continue-btn" v-if="isCorrectEmail" type="submit" id="submit-login">Войти</button>
      <span v-if="!isCorrectEmail" class="info small-text">Продолжая, вы соглашаетесь с условиями обслуживания</span>
      <router-link to="/registration" class="info small-text">Ещё не зарегистрированы?</router-link>
    </form>
@@ -57,12 +57,17 @@
     },
         methods: {
       login: function () {
-        let email = this.email 
+        if (this.isCorrectEmail){
+          let email = this.email 
         let password = this.password
         let type = "email"
         this.$store.dispatch('login', { email, password, type })
-       .then(() => this.$router.push('/'))
+       //.then(() => this.$router.push('/'))
        .catch(err => console.log(err))
+        } else {
+          this.verifyEmail()
+        }
+        
       },
       verifyEmail: function (){
         let email = this.email
@@ -80,11 +85,19 @@
 </script>
 
 <style scoped>
-  .login-wrp{
+  /* .login-wrp{
     width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, .7);
     display: flex;
     justify-content: center;
-  }
+    align-items: center;  
+  } */
   h2{
     font-family: Rambla, Arial, Helvetica, sans-serif;
     font-weight: bold;
