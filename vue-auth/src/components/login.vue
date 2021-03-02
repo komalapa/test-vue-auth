@@ -1,4 +1,5 @@
 <template>
+  
  <div class = "login-wrp">
    <form class="login" @submit.prevent="login">
      <h2  v-if="!isCorrectEmail">Вход</h2>
@@ -34,9 +35,9 @@
        </li>
      </ul>
      <span v-if="!isCorrectEmail" class="info">или</span>
-     <input  v-if="!isCorrectEmail" class = "inputs" required v-model="email" type="email" placeholder="Введите свой e-mail"/>
+     <input  v-if="!isCorrectEmail" class = "inputs" required v-model="email" type="email" placeholder="Введите свой e-mail" autofocus autocomplete="email"/>
      <span v-if="isCorrectEmail" class="correct-email" @click="changeEmail">{{email}}</span>
-     <input v-if="isCorrectEmail" class = "inputs" required v-model="password" type="password" placeholder="Введите пароль"/>
+     <input v-if="isCorrectEmail" class = "inputs" required v-model="password" ref="password" type="password" placeholder="Введите пароль" autofocus/>
      <span v-if="isCorrectEmail" class="info small-text forgotten-password">Забыли пароль?</span>
      <button class = "inputs button continue-btn" v-if="!isCorrectEmail" @click="verifyEmail" id="continue-login" type ="button">Продолжить</button>
      <button  class = "inputs button continue-btn" v-if="isCorrectEmail" type="submit" id="submit-login">Войти</button>
@@ -57,6 +58,8 @@
     },
         methods: {
       login: function () {
+        //console.log(this.$refs)
+        //console.log(this.$refs.testdiv)
         if (this.isCorrectEmail){
           let email = this.email 
         let password = this.password
@@ -66,6 +69,10 @@
        .catch(err => console.log(err))
         } else {
           this.verifyEmail()
+          this.$nextTick(() => {
+        this.$refs.password.focus();
+      });
+          //this.$refs.password.focus();
         }
         
       },
