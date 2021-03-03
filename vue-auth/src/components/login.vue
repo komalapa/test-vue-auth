@@ -92,19 +92,6 @@
 </script>
 
 <style scoped>
-  /* .login-wrp{
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    opacity: 1;
-    z-index: 10;
-    background-color: rgba(0, 0, 0, .7);
-    display: flex;
-    justify-content: center;
-    align-items: center;  
-  } */
   h2{
     font-family: Rambla, Arial, Helvetica, sans-serif;
     font-weight: bold;

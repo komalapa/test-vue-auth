@@ -1,12 +1,14 @@
 <template>
   <div id="app">
     <div class="login-wrp"  v-if="isLoginFormVisible && !isLoggedIn" @click="exitByClick"><Login/></div> 
+    <div class="reg-wrp"  v-if="isRegFormVisible && !isLoggedIn" @click="exitByClick"><Registration/></div> 
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/guard">Guard</router-link> |
       <!-- <router-link v-if="!isLoggedIn" to="/login">Login</router-link> | -->
       <span v-if="!isLoggedIn" @click="showLoginForm">Login</span> |
-      <router-link v-if="!isLoggedIn" to="/registration">Registrate</router-link>
+      <!-- <router-link v-if="!isLoggedIn" to="/registration">Registrate</router-link> -->
+      <span v-if="!isLoggedIn"  @click="showRegForm">Registrate</span>
       <span v-if="isLoggedIn"> | <a @click="logout">Logout</a></span>
     </div>
     <router-view />
@@ -15,14 +17,17 @@
 
 <script>
 import Login from './components/login.vue'
+import Registration from './components/registration.vue'
 
 export default {
   components: {
-        Login
+        Login,
+        Registration
     },
   data:function(){
     return {
       isLoginFormVisible: false,
+      isRegFormVisible: false,
     }
   },
   computed: {
@@ -34,6 +39,8 @@ export default {
     logout: function () {
       this.$store.dispatch("logout").then(() => {
         this.$router.push("/");
+        this.isRegFormVisible = false;
+        this.isLoginFormVisible = false;
       });
     },
     created: function () {
@@ -51,8 +58,10 @@ export default {
       });
     },
     showLoginForm: function(){
-      console.log (this.isLoginFormVisible)
       this.isLoginFormVisible = true;
+    },
+    showRegForm: function(){
+      this.isRegFormVisible = true;
     },
     exitByClick: function(e){
       //console.log (e.path[0].type)
@@ -61,6 +70,12 @@ export default {
         )
         {
         this.isLoginFormVisible = false
+      }
+      if (
+        (e.path[0] === document.querySelector("#app > div.reg-wrp > div")) 
+        )
+        {
+        this.isRegFormVisible = false
       }
     }
   },
@@ -71,7 +86,7 @@ export default {
   body{
     background-color:#E5E5E5;
   }
-  .login-wrp{
+  .login-wrp, .reg-wrp{
     width: 100%;
     height: 100%;
     position: fixed;
