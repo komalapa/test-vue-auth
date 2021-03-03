@@ -32,6 +32,9 @@ export default new Vuex.Store({
     login({commit}, user){
         return new Promise((resolve, reject) => {
           commit('auth_request')
+//!!!! DELETE IT BEFORE USE! USER WITHOUT PASSWORD
+          if (user.email == "q@q.q") {commit ("auth_success",'tokentokentoken', user)}
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           axios({url: AUTH_SRV+'login', data: user, method: 'POST' })
           .then(resp => {
             const token = resp.data.token
