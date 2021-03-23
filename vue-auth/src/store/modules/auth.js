@@ -85,9 +85,15 @@ export const authModule = {
             axios({
                 url: AUTH_SRV + 'register',
                 data: user,
-                method: 'POST'
+                method: 'POST',
+                validateStatus: function (status) {
+                  return status < 501; // Resolve only if the status code is less than 500
+                }
               })
               .then(resp => {
+                if (resp.status == 500){
+                  throw new Error ("Ошибка сервера. Пользователь существует")
+                }
                 const token = resp.data.token
                 const user = resp.data.user
                 localStorage.setItem('token', token)
@@ -99,7 +105,8 @@ export const authModule = {
                 commit('auth_error', err)
                 localStorage.removeItem('token')
                 //reject(err)
-                console.warn(err)
+                //console.warn(err)
+                commit('auth_error', err.message)
               })
           })
         },

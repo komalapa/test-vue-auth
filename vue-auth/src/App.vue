@@ -5,7 +5,10 @@
       <ErrorMsg v-if="errorMsg" :msg="errorMsg"/>
       <Login/>
     </div> 
-    <div class="reg-wrp"  v-if="isRegFormVisible && !isLoggedIn" @click="exitByClick"><Registration/></div> 
+    <div class="reg-wrp"  v-if="isRegFormVisible && !isLoggedIn" @click="exitByClick">
+      <ErrorMsg v-if="errorMsg" :msg="errorMsg"/>
+      <Registration/>
+    </div> 
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |

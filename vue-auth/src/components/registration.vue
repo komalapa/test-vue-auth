@@ -33,8 +33,8 @@
           password: this.password,
         }
         this.$store.dispatch('registration', data)
-       .then(() => this.$router.push('/'))
-       .catch(err => console.log(err))
+      //  .then(() => this.$router.push('/'))
+      //  .catch(err => console.log(err))
       }
     }
   }
