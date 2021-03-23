@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from './store.js'
+import store from './store/index'
 import Home from './components/home.vue'
-import Login from './components/login.vue'
+import About from './components/about.vue'
+//import Login from './components/login.vue'
 import Secure from './components/secure.vue'
-import Registration from './components/registration.vue'
+//import Registration from './components/registration.vue'
 Vue.use(Router)
 
 let router = new Router({
@@ -16,15 +17,20 @@ let router = new Router({
         component: Home
       },
       {
-        path: '/login',
-        name: 'login',
-        component: Login
+        path: '/about',
+        name: 'about',
+        component: About
       },
-      {
-        path: '/registration',
-        name: 'registration',
-        component: Registration
-      },
+      // {
+      //   path: '/login',
+      //   name: 'login',
+      //   component: Login
+      // },
+      // {
+      //   path: '/registration',
+      //   name: 'registration',
+      //   component: Registration
+      // },
       {
         path: '/guard', //Защищенные страницы
         name: 'guard',
@@ -42,7 +48,7 @@ let router = new Router({
         next()
         return
       }
-      next('/login') 
+      next(from) //отмена неавторизованного перехода
     } else {
       next() 
     }

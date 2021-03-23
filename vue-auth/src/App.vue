@@ -1,9 +1,17 @@
 <template>
   <div id="app">
-    <div class="login-wrp"  v-if="isLoginFormVisible && !isLoggedIn" @click="exitByClick"><Login/></div> 
-    <div class="reg-wrp"  v-if="isRegFormVisible && !isLoggedIn" @click="exitByClick"><Registration/></div> 
+    
+    <div class="login-wrp"  v-if="isLoginFormVisible && !isLoggedIn" @click="exitByClick">
+      <ErrorMsg v-if="errorMsg" :msg="errorMsg"/>
+      <Login/>
+    </div> 
+    <div class="reg-wrp"  v-if="isRegFormVisible && !isLoggedIn" @click="exitByClick">
+      <ErrorMsg v-if="errorMsg" :msg="errorMsg"/>
+      <Registration/>
+    </div> 
     <div id="nav">
       <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> |
       <router-link to="/guard">Guard</router-link> |
       <!-- <router-link v-if="!isLoggedIn" to="/login">Login</router-link> | -->
       <span v-if="!isLoggedIn" @click="showLoginForm">Login</span> |
@@ -18,11 +26,13 @@
 <script>
 import Login from './components/login.vue'
 import Registration from './components/registration.vue'
+import ErrorMsg from './components/errorMsg.vue'
 
 export default {
   components: {
         Login,
-        Registration
+        Registration,
+        ErrorMsg
     },
   data:function(){
     return {
@@ -34,11 +44,21 @@ export default {
     isLoggedIn: function () {
       return this.$store.getters.isLoggedIn;
     },
+    errorMsg: function (){
+      if (this.$store.getters.authStatus.indexOf("error") >= 0){
+        return this.$store.getters.authStatus
+      } 
+      return null
+            
+    }
   },
   methods: {
     logout: function () {
       this.$store.dispatch("logout").then(() => {
-        this.$router.push("/");
+        if (this.$router.history.current.meta.requiresAuth){//при logout уходим с защищенных страниц
+          console.log("push")
+          this.$router.push("/");
+        }
         this.isRegFormVisible = false;
         this.isLoginFormVisible = false;
       });
