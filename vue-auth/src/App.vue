@@ -4,6 +4,7 @@
     <div class="reg-wrp"  v-if="isRegFormVisible && !isLoggedIn" @click="exitByClick"><Registration/></div> 
     <div id="nav">
       <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> |
       <router-link to="/guard">Guard</router-link> |
       <!-- <router-link v-if="!isLoggedIn" to="/login">Login</router-link> | -->
       <span v-if="!isLoggedIn" @click="showLoginForm">Login</span> |
@@ -38,7 +39,10 @@ export default {
   methods: {
     logout: function () {
       this.$store.dispatch("logout").then(() => {
-        this.$router.push("/");
+        if (this.$router.history.current.meta.requiresAuth){//при logout уходим с защищенных страниц
+          console.log("push")
+          this.$router.push("/");
+        }
         this.isRegFormVisible = false;
         this.isLoginFormVisible = false;
       });
