@@ -16,8 +16,9 @@ export const authModule = {
           state.token = token
           state.user = user
         },
-        auth_error(state) {
-          state.status = 'error'
+        auth_error(state, msg) {
+          state.status = `error ${msg}`
+          //console.log(msg)
         },
         logout(state) {
           state.status = ''
@@ -64,10 +65,10 @@ export const authModule = {
                   })
                   .catch(err => {
                     //console.log ("catch status",err)
-                    commit('auth_error')
+                    commit('auth_error', err.message)
                     localStorage.removeItem('token')
                     //reject(err)
-                    console.warn(err)
+                    //console.warn(err)
                   })
               //  }
                 // catch(err){

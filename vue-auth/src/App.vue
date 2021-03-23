@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <div class="login-wrp"  v-if="isLoginFormVisible && !isLoggedIn" @click="exitByClick"><Login/></div> 
+    
+    <div class="login-wrp"  v-if="isLoginFormVisible && !isLoggedIn" @click="exitByClick">
+      <ErrorMsg v-if="errorMsg" :msg="errorMsg"/>
+      <Login/>
+    </div> 
     <div class="reg-wrp"  v-if="isRegFormVisible && !isLoggedIn" @click="exitByClick"><Registration/></div> 
     <div id="nav">
       <router-link to="/">Home</router-link> |
@@ -19,11 +23,13 @@
 <script>
 import Login from './components/login.vue'
 import Registration from './components/registration.vue'
+import ErrorMsg from './components/errorMsg.vue'
 
 export default {
   components: {
         Login,
-        Registration
+        Registration,
+        ErrorMsg
     },
   data:function(){
     return {
@@ -35,6 +41,13 @@ export default {
     isLoggedIn: function () {
       return this.$store.getters.isLoggedIn;
     },
+    errorMsg: function (){
+      if (this.$store.getters.authStatus.indexOf("error") >= 0){
+        return this.$store.getters.authStatus
+      } 
+      return null
+            
+    }
   },
   methods: {
     logout: function () {
